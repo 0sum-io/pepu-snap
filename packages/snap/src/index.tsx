@@ -1,43 +1,64 @@
-import type { OnRpcRequestHandler } from '@metamask/snaps-sdk';
-import { Box, Text, Bold } from '@metamask/snaps-sdk/jsx';
+import type { OnCronjobHandler, OnInstallHandler } from '@metamask/snaps-sdk';
+import { Text } from '@metamask/snaps-sdk/jsx';
 
-/**
- * Handle incoming JSON-RPC requests, sent through `wallet_invokeSnap`.
- *
- * @param args - The request handler args as object.
- * @param args.origin - The origin of the request, e.g., the website that
- * invoked the snap.
- * @param args.request - A validated JSON-RPC request object.
- * @returns The result of `snap_dialog`.
- * @throws If the request method is not valid for this snap.
- */
-export const onRpcRequest: OnRpcRequestHandler = async ({
-  origin,
-  request,
-}) => {
-  switch (request.method) {
-    case 'hello':
-      return snap.request({
-        method: 'snap_dialog',
-        params: {
-          type: 'confirmation',
-          content: (
-            <Box>
-              <Text>
-                Hello, <Bold>{origin}</Bold>!
-              </Text>
-              <Text>
-                This custom confirmation is just for display purposes.
-              </Text>
-              <Text>
-                But you can edit the snap source code to make it do something,
-                if you want to!
-              </Text>
-            </Box>
-          ),
-        },
-      });
-    default:
-      throw new Error('Method not found.');
-  }
+// https://docs.metamask.io/snaps/reference/entry-points#oninstall
+export const onInstall: OnInstallHandler = async ({}) => {
+  return await snap.request({
+    method: 'snap_notify',
+    params: {
+      type: 'inApp',
+      message: 'Thanks for installing PEPU Unchained Snap. Stay notified here.',
+      title: 'PEPE Unchained',
+      content: <Text> </Text>,
+      footerLink: {
+        text: 'Visit PEPE Unchained',
+        href: `https://pepeunchained.com/`,
+      },
+    },
+  });
+};
+
+// https://docs.metamask.io/snaps/features/cron-jobs/#2-implement-a-cron-job-handler
+export const onCronjob: OnCronjobHandler = async ({ request }) => {
+  // https://github.com/MetaMask/snaps/blob/main/packages/examples/packages/network-access/src/index.ts#L25
+  const response = await fetch(
+    `https://metamask-snap-notifi.vercel.app/mezo`,
+  ).then((res) => res.json());
+
+  // https://docs.metamask.io/snaps/features/data-storage/#use-unencrypted-storage
+  const state = (await snap.request({
+    method: 'snap_manageState',
+    params: {
+      operation: 'get',
+      encrypted: false,
+    },
+  })) || { id: 1 };
+
+  // if old state then return
+  if (state.id === response.id) return;
+
+  // https://docs.metamask.io/snaps/features/notifications/#expanded-view
+  await snap.request({
+    method: 'snap_notify',
+    params: {
+      type: 'inApp',
+      message: response.text,
+      title: 'Mezo',
+      content: <Text> </Text>,
+      footerLink: {
+        text: 'Read More',
+        href: `https://x.com/MezoNetwork/status/${response.id}`,
+      },
+    },
+  });
+
+  // update state
+  await snap.request({
+    method: 'snap_manageState',
+    params: {
+      operation: 'update',
+      newState: response,
+      encrypted: false,
+    },
+  });
 };

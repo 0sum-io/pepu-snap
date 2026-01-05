@@ -1,13 +1,13 @@
 {
   "version": "0.1.0",
-  "description": "An example Snap written in TypeScript.",
-  "proposedName": "TypeScript Example",
+  "description": "PEPE Unchained",
+  "proposedName": "PEPE Unchained",
   "repository": {
     "type": "git",
     "url": "https://github.com/MetaMask/template-snap-monorepo.git"
   },
   "source": {
-    "shasum": "Gfr8rFPI5RjGo4ipE1RHD+aBxx19Tv+wGOGd1cnaI+E=",
+    "shasum": "4bAS9K+Pa6ksHXf17gnypFIPeWHlV9K+obWsJ0TdpLY=",
     "location": {
       "npm": {
         "filePath": "dist/bundle.js",
@@ -17,11 +17,20 @@
     }
   },
   "initialPermissions": {
-    "snap_dialog": {},
-    "endowment:rpc": {
-      "dapps": true,
-      "snaps": false
-    }
+    "endowment:cronjob": {
+      "jobs": [
+        {
+          "expression": "* * * * *",
+          "request": {
+            "method": "execute"
+          }
+        }
+      ]
+    },
+    "snap_notify": {},
+    "snap_manageState": {},
+    "endowment:network-access": {},
+    "endowment:lifecycle-hooks": {}
   },
   "platformVersion": "9.3.0",
   "manifestVersion": "0.1"
