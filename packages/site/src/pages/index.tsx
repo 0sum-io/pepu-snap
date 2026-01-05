@@ -6,6 +6,21 @@ const Index = () => {
   const { isFlask, snapsDetected, installedSnap } = useMetaMask();
   const requestSnap = useRequestSnap();
 
+  const ConnectButton = styled.div`
+    margin-top: 50px;
+    font-size: 20px;
+    padding: 20px 40px;
+    border-radius: 99px;
+    cursor: pointer;
+    background-color: #42a32a;
+    color: black;
+    font-weight: bold;
+    transition: transform 0.2s ease-in-out;
+    &:hover {
+      transform: scale(1.05);
+    }
+  `;
+
   return (
     <>
       <div
@@ -31,19 +46,9 @@ const Index = () => {
           Bring PEPU Notifications to MetaMask.
         </div>
 
-        <div
-          onClick={requestSnap}
-          style={{
-            marginTop: '50px',
-            fontSize: '20px',
-            border: '1px solid white',
-            padding: '20px 40px',
-            borderRadius: '8px',
-            cursor: 'pointer',
-          }}
-        >
+        <ConnectButton onClick={requestSnap}>
           {!installedSnap ? 'Connect' : 'Connected'}
-        </div>
+        </ConnectButton>
       </div>
     </>
   );
