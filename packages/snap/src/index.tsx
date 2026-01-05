@@ -20,34 +20,19 @@ export const onInstall: OnInstallHandler = async ({}) => {
 
 // https://docs.metamask.io/snaps/features/cron-jobs/#2-implement-a-cron-job-handler
 export const onCronjob: OnCronjobHandler = async ({ request }) => {
-  // https://github.com/MetaMask/snaps/blob/main/packages/examples/packages/network-access/src/index.ts#L25
-  const response = await fetch(
-    `https://metamask-snap-notifi.vercel.app/mezo`,
-  ).then((res) => res.json());
-
-  // https://docs.metamask.io/snaps/features/data-storage/#use-unencrypted-storage
-  const state = (await snap.request({
-    method: 'snap_manageState',
-    params: {
-      operation: 'get',
-      encrypted: false,
-    },
-  })) || { id: 1 };
-
-  // if old state then return
-  if (state.id === response.id) return;
+  if (Math.random() < 0.5) return;
 
   // https://docs.metamask.io/snaps/features/notifications/#expanded-view
   await snap.request({
     method: 'snap_notify',
     params: {
       type: 'inApp',
-      message: response.text,
-      title: 'Mezo',
+      message: 'helloooo',
+      title: 'PEPE Unchained',
       content: <Text> </Text>,
       footerLink: {
         text: 'Read More',
-        href: `https://x.com/MezoNetwork/status/${response.id}`,
+        href: `https://pepeunchained.com/`,
       },
     },
   });
@@ -57,7 +42,7 @@ export const onCronjob: OnCronjobHandler = async ({ request }) => {
     method: 'snap_manageState',
     params: {
       operation: 'update',
-      newState: response,
+      newState: { hello: 'world' },
       encrypted: false,
     },
   });
