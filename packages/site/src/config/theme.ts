@@ -9,8 +9,8 @@ const breakpoints = ['600px', '768px', '992px'];
 const theme = {
   fonts: {
     default:
-      '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif',
-    code: 'ui-monospace,Menlo,Monaco,"Cascadia Mono","Segoe UI Mono","Roboto Mono","Oxygen Mono","Ubuntu Monospace","Source Code Pro","Fira Mono","Droid Sans Mono","Courier New", monospace',
+      '"Grandstander", -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif',
+    code: '"Grandstander", ui-monospace,Menlo,Monaco,"Cascadia Mono","Segoe UI Mono","Roboto Mono","Oxygen Mono","Ubuntu Monospace","Source Code Pro","Fira Mono","Droid Sans Mono","Courier New", monospace',
   },
   fontSizes: {
     heading: '5.2rem',
@@ -51,7 +51,7 @@ export const light: DefaultTheme = {
       alternative: '#BBC0C5',
     },
     text: {
-      default: '#24272A',
+      default: '#051705',
       muted: '#6A737D',
       alternative: '#535A61',
       inverse: '#FFFFFF',
@@ -81,7 +81,7 @@ export const light: DefaultTheme = {
 export const dark: DefaultTheme = {
   colors: {
     background: {
-      default: '#24272A',
+      default: '#051705',
       alternative: '#141618',
       inverse: '#FFFFFF',
     },
@@ -93,7 +93,7 @@ export const dark: DefaultTheme = {
       default: '#FFFFFF',
       muted: '#FFFFFF',
       alternative: '#D6D9DC',
-      inverse: '#24272A',
+      inverse: '#051705',
     },
     border: {
       default: '#848C96',

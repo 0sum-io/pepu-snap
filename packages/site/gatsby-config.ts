@@ -11,9 +11,9 @@ const config: GatsbyConfig = {
       resolve: 'gatsby-plugin-manifest',
       options: {
         name: 'Template Snap',
-        icon: 'src/assets/logo.svg',
+        icon: 'src/assets/logo.png',
         /* eslint-disable @typescript-eslint/naming-convention */
-        theme_color: '#6F4CFF',
+        theme_color: '#42a32a',
         background_color: '#FFFFFF',
         /* eslint-enable @typescript-eslint/naming-convention */
         display: 'standalone',

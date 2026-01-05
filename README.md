@@ -1,5 +1,10 @@
 # @metamask/template-snap-monorepo
 
+# Theme
+
+Green: #42a32a
+BG: #051706
+
 This repository demonstrates how to develop a snap with TypeScript. For detailed
 instructions, see [the MetaMask documentation](https://docs.metamask.io/guide/snaps.html#serving-a-snap-to-your-local-environment).
 
