@@ -1,17 +1,34 @@
 # @metamask/template-snap-monorepo
 
-# Theme
-
-Green: #42a32a
-BG: #051706
-Button:hover: transform: scale(1.05);
-
 This repository demonstrates how to develop a snap with TypeScript. For detailed
 instructions, see [the MetaMask documentation](https://docs.metamask.io/guide/snaps.html#serving-a-snap-to-your-local-environment).
 
 MetaMask Snaps is a system that allows anyone to safely expand the capabilities
 of MetaMask. A _snap_ is a program that we run in an isolated environment that
 can customize the wallet experience.
+
+## Development
+
+- Edit permissons `packages/snap/snap.manifest.json`
+- Edit site `packages/site/src/pages/index.tsx`
+- Edit snap `packages/snap/src/index.tsx`
+
+## Theme
+
+Green: #42a32a
+BG: #051706
+Button:hover: transform: scale(1.05);
+
+## Publish on npm
+
+https://docs.metamask.io/snaps/how-to/publish-a-snap
+
+https://www.npmjs.com/package/@0sum/mezo
+
+```bash
+cd packages/snap
+npm publish --access public
+```
 
 ## Snaps is pre-release software
 
