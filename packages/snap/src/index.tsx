@@ -20,15 +20,14 @@ export const onInstall: OnInstallHandler = async ({}) => {
 
 // https://docs.metamask.io/snaps/features/cron-jobs/#2-implement-a-cron-job-handler
 export const onCronjob: OnCronjobHandler = async ({ request }) => {
-  if (Math.random() < 0.5) return;
+  const state = await snap.request({
+    method: 'snap_manageState',
+    params: {
+      operation: 'get',
+    },
+  });
 
-  // const state = await snap.request({
-  //   method: 'snap_manageState',
-  //   params: {
-  //     operation: 'get',
-  //     encrypted: false,
-  //   },
-  // });
+  console.log('\n\n\nstate::', state);
 
   // https://docs.metamask.io/snaps/features/notifications/#expanded-view
   await snap.request({
