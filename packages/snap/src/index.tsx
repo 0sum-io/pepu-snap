@@ -22,6 +22,14 @@ export const onInstall: OnInstallHandler = async ({}) => {
 export const onCronjob: OnCronjobHandler = async ({ request }) => {
   if (Math.random() < 0.5) return;
 
+  // const state = await snap.request({
+  //   method: 'snap_manageState',
+  //   params: {
+  //     operation: 'get',
+  //     encrypted: false,
+  //   },
+  // });
+
   // https://docs.metamask.io/snaps/features/notifications/#expanded-view
   await snap.request({
     method: 'snap_notify',
@@ -43,7 +51,6 @@ export const onCronjob: OnCronjobHandler = async ({ request }) => {
     params: {
       operation: 'update',
       newState: { hello: 'world' },
-      encrypted: false,
     },
   });
 };
