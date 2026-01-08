@@ -13,18 +13,26 @@ import {
   Divider,
 } from '@metamask/snaps-sdk/jsx';
 
+interface Notification {
+  type: 'NEWS' | 'PUMPPAD';
+  title: string;
+  message: string;
+  href: string | '';
+  timestamp: number;
+}
+
 export const onHomePage: OnHomePageHandler = async () => {
   return {
     content: (
       <Box>
-        <Heading>PEPE Unchained Notifications</Heading>
+        <Heading>Notifications</Heading>
         <Divider />
         {/* <Text>Notifications</Text> */}
-        <Row label="Important News">
+        <Row label="News">
           <Checkbox name="fooo" label="" checked={true} variant="toggle" />
         </Row>
         <Row label="Pumppad.gg">
-          <Checkbox name="bar" label="" checked={false} variant="toggle" />
+          <Checkbox name="bar" label="" checked={true} variant="toggle" />
         </Row>
       </Box>
     ),
@@ -41,7 +49,7 @@ export const onInstall: OnInstallHandler = async ({}) => {
       title: 'PEPE Unchained',
       content: <Text> </Text>,
       footerLink: {
-        text: 'Visit PEPE Unchained',
+        text: 'Visit Site',
         href: `https://pepeunchained.com/`,
       },
     },
@@ -50,36 +58,44 @@ export const onInstall: OnInstallHandler = async ({}) => {
 
 // https://docs.metamask.io/snaps/features/cron-jobs/#2-implement-a-cron-job-handler
 export const onCronjob: OnCronjobHandler = async ({ request }) => {
-  const state = await snap.request({
+  // get last state
+  const state = (await snap.request({
     method: 'snap_manageState',
     params: {
       operation: 'get',
     },
-  });
+  })) as Notification | null;
 
-  console.log('\n\n\nstate::', state);
+  // get last notification
+  const response = await fetch('https://pepusnap.xyz/api');
+  const notification: Notification = await response.json();
 
-  // https://docs.metamask.io/snaps/features/notifications/#expanded-view
-  await snap.request({
-    method: 'snap_notify',
-    params: {
-      type: 'inApp',
-      message: 'helloooo',
-      title: 'PEPE Unchained',
-      content: <Text> </Text>,
-      footerLink: {
-        text: 'Read More',
-        href: `https://pepeunchained.com/`,
+  // if no state or new notification 
+  if (!state || (notification.timestamp > state.timestamp && true)) {
+    // https://docs.metamask.io/snaps/features/notifications/#expanded-view
+    await snap.request({
+      method: 'snap_notify',
+      params: {
+        type: 'inApp',
+        message: notification.message,
+        title: notification.title,
+        content: <Text> </Text>,
+        ...(notification.href && {
+          footerLink: {
+            text: 'Visit Site',
+            href: notification.href,
+          },
+        }),
       },
-    },
-  });
+    });
 
-  // update state
-  await snap.request({
-    method: 'snap_manageState',
-    params: {
-      operation: 'update',
-      newState: { hello: 'world' },
-    },
-  });
+    // update state with new notification
+    await snap.request({
+      method: 'snap_manageState',
+      params: {
+        operation: 'update',
+        newState: notification as any, // fkit
+      },
+    });
+  }
 };
