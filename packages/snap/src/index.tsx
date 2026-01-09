@@ -2,9 +2,11 @@ import type {
   OnHomePageHandler,
   OnCronjobHandler,
   OnInstallHandler,
+  OnUserInputHandler,
 } from '@metamask/snaps-sdk';
 // https://github.com/MetaMask/snaps/blob/main/packages/snaps-sdk/src/jsx/components/index.ts
 import {
+  Container,
   Box,
   Heading,
   Text,
@@ -14,43 +16,68 @@ import {
 } from '@metamask/snaps-sdk/jsx';
 
 interface Notification {
-  type: 'NEWS' | 'PUMPPAD';
+  type: 'news' | 'pumppad';
   title: string;
   message: string;
-  href: string | '';
+  href: string;
   timestamp: number;
+  news: boolean;
+  pumppad: boolean;
 }
+
+// https://docs.metamask.io/snaps/reference/entry-points#oninstall
+export const onInstall: OnInstallHandler = async ({}) => {
+  // set initial state
+  await snap.request({
+    method: 'snap_manageState',
+    params: {
+      operation: 'update',
+      newState: {
+        timestamp: Date.now(),
+        news: true,
+        pumppad: true,
+      },
+    },
+  });
+};
 
 export const onHomePage: OnHomePageHandler = async () => {
   return {
     content: (
-      <Box>
-        <Heading>Notifications</Heading>
-        <Divider />
-        {/* <Text>Notifications</Text> */}
-        <Row label="News">
-          <Checkbox name="fooo" label="" checked={true} variant="toggle" />
-        </Row>
-        <Row label="Pumppad.gg">
-          <Checkbox name="bar" label="" checked={true} variant="toggle" />
-        </Row>
-      </Box>
+      <Container>
+        <Box>
+          <Heading>Notifications</Heading>
+          <Divider />
+          <Row label="News">
+            <Checkbox name="news" label="" checked={true} variant="toggle" />
+          </Row>
+          <Row label="Pumppad.gg">
+            <Checkbox name="pumppad" label="" checked={true} variant="toggle" />
+          </Row>
+        </Box>
+      </Container>
     ),
   };
 };
 
-// https://docs.metamask.io/snaps/reference/entry-points#oninstall
-export const onInstall: OnInstallHandler = async ({}) => {
-  return await snap.request({
-    method: 'snap_notify',
+// https://docs.metamask.io/snaps/reference/entry-points#onuserinput
+export const onUserInput: OnUserInputHandler = async ({ event }) => {
+  if (event.type !== 'InputChangeEvent') return;
+  // get state
+  const state = (await snap.request({
+    method: 'snap_manageState',
     params: {
-      type: 'inApp',
-      message: 'Thanks for installing PEPU Unchained Snap. Stay notified here.',
-      title: 'PEPE Unchained',
-      content: <Text> </Text>,
-      footerLink: {
-        text: 'Visit Site',
-        href: `https://pepeunchained.com/`,
+      operation: 'get',
+    },
+  })) as Notification | null;
+  // update state
+  await snap.request({
+    method: 'snap_manageState',
+    params: {
+      operation: 'update',
+      newState: {
+        ...state,
+        [event.name]: event.value,
       },
     },
   });
@@ -70,8 +97,12 @@ export const onCronjob: OnCronjobHandler = async ({ request }) => {
   const response = await fetch('https://pepusnap.xyz/api');
   const notification: Notification = await response.json();
 
-  // if no state or new notification 
-  if (!state || (notification.timestamp > state.timestamp && true)) {
+  if (
+    !state || // if no state
+    !state.timestamp || // if no timestamp
+    (notification.timestamp > state.timestamp && // if new notification
+      state[notification.type] === true) // if checkbox is checked
+  ) {
     // https://docs.metamask.io/snaps/features/notifications/#expanded-view
     await snap.request({
       method: 'snap_notify',
@@ -94,7 +125,10 @@ export const onCronjob: OnCronjobHandler = async ({ request }) => {
       method: 'snap_manageState',
       params: {
         operation: 'update',
-        newState: notification as any, // fkit
+        newState: {
+          ...state,
+          timestamp: notification.timestamp,
+        },
       },
     });
   }
