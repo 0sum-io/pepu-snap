@@ -23,7 +23,7 @@ Button:hover: transform: scale(1.05);
 
 https://docs.metamask.io/snaps/how-to/publish-a-snap
 
-https://www.npmjs.com/package/@0sum/mezo
+https://www.npmjs.com/package/@0sum/pepu-snap
 
 ```bash
 cd packages/snap
