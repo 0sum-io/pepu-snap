@@ -25,30 +25,56 @@ const Index = () => {
     <>
       <div
         style={{
-          height: '90vh',
-          // backgroundImage:
-          //   'url("https://cdn.sanity.io/images/9zunswfd/production/b3a7db601127f269d420115fcbcd6cbfda42ea3e-1174x957.webp")',
-          // backgroundPosition: 'center',
-          // backgroundSize: 'min(100vw, 100vh)',
-          // backgroundRepeat: 'no-repeat',
+          minHeight: '90vh',
           backgroundColor: '#051706',
           display: 'flex',
-          flexDirection: 'column', // stack children vertically
-          justifyContent: 'center',
+          flexWrap: 'wrap',
           alignItems: 'center',
+          justifyContent: 'center',
+          padding: '5vh 5vw',
         }}
       >
+        {/* Left column */}
         <div
           style={{
-            fontSize: '2.5vw',
+            flex: '1 1 400px',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'flex-end',
+            textAlign: 'right',
           }}
         >
-          Bring PEPU Notifications to MetaMask.
+          <div
+            style={{
+              fontSize: 'clamp(60px, 6vw, 75px)',
+              lineHeight: 1.15,
+            }}
+          >
+            Bring PEPU Notifications to MetaMask
+          </div>
+
+          <ConnectButton onClick={requestSnap}>
+            {!installedSnap ? 'Connect' : 'Connected'}
+          </ConnectButton>
         </div>
 
-        <ConnectButton onClick={requestSnap}>
-          {!installedSnap ? 'Connect' : 'Connected'}
-        </ConnectButton>
+        {/* Right column */}
+        <div
+          style={{
+            flex: '1 1 300px',
+            display: 'flex',
+            justifyContent: 'center',
+          }}
+        >
+          <img
+            src="https://pepeunchained.com/assets/images/svg-icons/broken_chains.gif"
+            style={{
+              width: '100%',
+              maxWidth: '350px',
+              height: 'auto',
+            }}
+          />
+        </div>
       </div>
     </>
   );
