@@ -27,6 +27,7 @@ https://www.npmjs.com/package/@0sum/pepu-snap
 
 ```bash
 cd packages/snap
+npm login
 npm publish --access public
 ```
 
