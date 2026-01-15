@@ -4,10 +4,10 @@
   "proposedName": "PEPE Unchained",
   "repository": {
     "type": "git",
-    "url": "https://github.com/0sum-io/pepu-snap.git"
+    "url": "git+https://github.com/0sum-io/pepu-snap.git"
   },
   "source": {
-    "shasum": "YT1KCJ4VgZX1O11mwoOlIgTlBR/ogzBqhKS9JED/N0g=",
+    "shasum": "a2E8TWEEoL5Nx9HoJEj5KCSLkfZgKsH5yasMvflibr8=",
     "location": {
       "npm": {
         "filePath": "dist/bundle.js",

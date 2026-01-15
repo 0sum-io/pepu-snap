@@ -4,7 +4,7 @@
   "description": "PEPE Unchained Snap",
   "repository": {
     "type": "git",
-    "url": "https://github.com/0sum-io/pepu-snap.git"
+    "url": "git+https://github.com/0sum-io/pepu-snap.git"
   },
   "license": "(MIT-0 OR Apache-2.0)",
   "main": "./dist/bundle.js",
