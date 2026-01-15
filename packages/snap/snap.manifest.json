@@ -7,7 +7,7 @@
     "url": "git+https://github.com/0sum-io/pepu-snap.git"
   },
   "source": {
-    "shasum": "a2E8TWEEoL5Nx9HoJEj5KCSLkfZgKsH5yasMvflibr8=",
+    "shasum": "tjxt+jaF1e0NMSOFfzNyQf0GenMYMimp4K+m6HOMeUk=",
     "location": {
       "npm": {
         "filePath": "dist/bundle.js",
