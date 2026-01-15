@@ -94,7 +94,7 @@ export const onCronjob: OnCronjobHandler = async ({ request }) => {
   })) as Notification | null;
 
   // get last notification
-  const response = await fetch('https://pepusnap.xyz/api/notify');
+  const response = await fetch('https://auth.pepusnap.xyz/api/notify');
   const notification: Notification = await response.json();
 
   if (
