@@ -7,12 +7,12 @@
     "url": "https://github.com/0sum-io/pepu-snap.git"
   },
   "source": {
-    "shasum": "iYUCb7L/u95CEm6gkxGaSzHpQ5qWDKqD5fx7sdI3cxQ=",
+    "shasum": "YT1KCJ4VgZX1O11mwoOlIgTlBR/ogzBqhKS9JED/N0g=",
     "location": {
       "npm": {
         "filePath": "dist/bundle.js",
         "iconPath": "img/icon.svg",
-        "packageName": "snap",
+        "packageName": "@0sum/pepu-snap",
         "registry": "https://registry.npmjs.org/"
       }
     }
