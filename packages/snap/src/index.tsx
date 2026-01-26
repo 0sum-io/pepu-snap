@@ -16,13 +16,14 @@ import {
 } from '@metamask/snaps-sdk/jsx';
 
 interface Notification {
-  type: 'news' | 'pumppad';
+  type: 'news' | 'pumppad' | 'hora';
   title: string;
   message: string;
   href: string;
   timestamp: number;
   news: boolean;
   pumppad: boolean;
+  hora: boolean;
 }
 
 // https://docs.metamask.io/snaps/reference/entry-points#oninstall
@@ -36,6 +37,7 @@ export const onInstall: OnInstallHandler = async ({}) => {
         timestamp: Date.now(),
         news: true,
         pumppad: true,
+        hora: true,
       },
     },
   });
@@ -53,6 +55,9 @@ export const onHomePage: OnHomePageHandler = async () => {
           </Row>
           <Row label="Pumppad.gg">
             <Checkbox name="pumppad" label="" checked={true} variant="toggle" />
+          </Row>
+          <Row label="HolderRadar">
+            <Checkbox name="hora" label="" checked={true} variant="toggle" />
           </Row>
         </Box>
       </Container>
