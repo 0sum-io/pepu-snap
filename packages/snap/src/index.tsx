@@ -108,13 +108,17 @@ export const onCronjob: OnCronjobHandler = async ({ request }) => {
     (notification.timestamp > state.timestamp && // if new notification
       state[notification.type] === true) // if checkbox is checked
   ) {
+    // trim title to 100 characters
+    const trimTitle = notification.title.length > 100 ? notification.title.slice(0, 100) + '...' : notification.title;
+    // trim message to 495 characters
+    const trimMessage = notification.message.length > 495 ? notification.message.slice(0, 495) + '...' : notification.message;
     // https://docs.metamask.io/snaps/features/notifications/#expanded-view
     await snap.request({
       method: 'snap_notify',
       params: {
         type: 'inApp',
-        message: notification.message,
-        title: notification.title,
+        message: trimMessage,
+        title: trimTitle,
         content: <Text> </Text>,
         ...(notification.href && {
           footerLink: {
