@@ -1,6 +1,6 @@
 {
   "name": "@0sum/pepu-snap",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "PEPE Unchained Snap",
   "repository": {
     "type": "git",
@@ -10,7 +10,8 @@
   "main": "./dist/bundle.js",
   "files": [
     "dist/",
-    "snap.manifest.json"
+    "snap.manifest.json",
+    "img"
   ],
   "scripts": {
     "allow-scripts": "yarn workspace root allow-scripts",

@@ -1,5 +1,5 @@
 {
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "PEPE Unchained",
   "proposedName": "PEPE Unchained",
   "repository": {
@@ -7,7 +7,7 @@
     "url": "git+https://github.com/0sum-io/pepu-snap.git"
   },
   "source": {
-    "shasum": "WvWQjwcObiiYzgUKGIDxoz626aV5Q202f4f2/hyRT9A=",
+    "shasum": "MSS3MNr8B2gklT23eJffSuBCMamaRbKtxwpvuqGZ4K0=",
     "location": {
       "npm": {
         "filePath": "dist/bundle.js",
